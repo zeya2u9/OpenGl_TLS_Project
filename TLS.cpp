@@ -4,7 +4,7 @@
 #include<GL/glut.h>
 #include<stdio.h>
 #include<string.h>
-
+#define ESCAPE 27
 int view=0;
 
 void text(int x,int y,char *string,int font)
@@ -59,10 +59,20 @@ void main_display()
 	
 	glutSwapBuffers();
 }
+void traffic_start()
+{}
 void keyboard(unsigned char key,int x,int y)
 {
-	if(key==27) exit(0); ///escape
-	else printf("You pressed %c",key);
+	switch(key)
+	{
+		case ESCAPE:exit(1);
+		case ' ':view=1;
+				glClearColor(0,0,0,0);
+				traffic_start();
+				break;
+		default:printf("You pressed %c\n",key);
+		
+	}
 }
 void reshape(int w,int h)
 {
