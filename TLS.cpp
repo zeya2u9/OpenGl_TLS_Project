@@ -1,26 +1,40 @@
 // traffic.cpp : Defines the entry point for the console application.
 //
-
 #include "stdafx.h"
-
 #include<GL/glut.h>
 #include<stdio.h>
 #include<string.h>
 
 int view=0;
-void arrow()
+
+void text(int x,int y,char *string,int font)
 {
-	glColor3f(0.8,0.7,0.5);
-	glPushMatrix();
-	glBegin(GL_LINES);
-		glVertex2f(0.0,0.0);
-		glVertex2f(1.0,1.0);
-	glEnd();
-	glPopMatrix();
+	int i=0;
+	glColor3f(0.5,0.5,0.8);
+	glRasterPos2f(x,y);
+	for(i=0;i<strlen(string);i++)
+	{
+		if(font==1)
+			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,string[i]);
+		else if(font==2)
+			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10,string[i]);
+	}
 }
 void First_win()
 {
-	glClearColor(0.0,0.0,0.0,0.0);
+	glClearColor(1.0,1.0,0.6,1.0);
+	text(290,700,"TRAFFIC LIGHT SIMULATOR",1);
+	glutPostRedisplay();
+	//glutSwapBuffers();
+}
+void init()
+{
+	glClearColor(0,0,0,0);
+	glPointSize(5.0);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(0.0,1000,0.0,800,50.0,-50.0);
+	glutPostRedisplay();
 }
 void main_display()
 {
@@ -28,7 +42,10 @@ void main_display()
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	if(view==0)
+	{
+		init();
 		First_win();
+	}
 	//glutWireSphere(1.0,15,20);
 	//arrow();
 	glutSwapBuffers();
