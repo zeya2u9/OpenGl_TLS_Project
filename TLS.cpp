@@ -1,4 +1,4 @@
-// traffic.cpp : Defines the entry point for the console application.
+// TLS.cpp : Defines the entry point for the console application.
 //
 #include "stdafx.h"
 #include<GL/glut.h>
