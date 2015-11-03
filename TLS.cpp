@@ -68,9 +68,14 @@ void init() {
 }
 
 void car_chalao() {
-	if(rl1[GREEN] || crx > 300 || rl1[YELLOW])
+	if(rl1[GREEN] || crx > 0)
 		crx += 3;
+	if(!rl1[GREEN] && (crx > -100 && crx < 0)) {
+		crx -= 3;
+	}
 	if(rl1[RED] && crx < -100)
+		crx += 3;
+	if(rl1[YELLOW] && (crx > 0 || crx < -100)) 
 		crx += 3;
 	if(crx > 1200) {
 		crx = -300;
