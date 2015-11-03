@@ -30,8 +30,7 @@ void text(int x, int y, string s, int font) {
 	}
 }
 
-void First_win()
-{
+void First_win() {
 	glClearColor(1.0,1.0,0.6,1.0);
 	text(290,700,"TRAFFIC LIGHT SIMULATOR",1);
 	text(350,660,"Using OpenGL",1);
@@ -42,8 +41,8 @@ void First_win()
 	glutPostRedisplay();
 	//glutSwapBuffers();
 }
-void init()
-{
+
+void init() {
 	glClearColor(0,0,0,0);
 	glPointSize(5.0);
 	glMatrixMode(GL_PROJECTION);
@@ -51,8 +50,8 @@ void init()
 	glOrtho(0.0,1000,0.0,800,50.0,-50.0);
 	glutPostRedisplay();
 }
-void road_strips()
-{
+
+void road_strips() {
 	//first bottom green strip
 	glPushMatrix();
 	glBegin(GL_POLYGON);
@@ -121,31 +120,30 @@ void road_strips()
 	glPopMatrix();
 
 }
-void main_display()
-{
+
+void main_display() {
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	if(view==0)
-	{
+	if(view==0) {
 		init();
 		First_win();
 	}
-	else
-	{
+	else {
 		//---------CONSTANT PARTS
 		//ROAD STRIP
 		road_strips();
 	}
 	glutSwapBuffers();
 }
-void traffic_start()
-{}
-void keyboard(unsigned char key,int x,int y)
-{
+
+void traffic_start() {
+
+}
+
+void keyboard(unsigned char key, int x, int y) {
 	
-	switch(key)
-	{
+	switch(key) {
 		case ESCAPE:exit(1);
 		case ' ':view=1;
 				glClearColor(0,0,0,0);
@@ -155,20 +153,19 @@ void keyboard(unsigned char key,int x,int y)
 		
 	}
 }
-void reshape(int w,int h)
-{
+
+void reshape(int w,int h) {
 	glViewport(0,0,w,h);
 	cout<<"Width="<<w<<" height= "<<h<<endl;
 
 }
-int main(int argc,char** argv)
-{
 
+int main(int argc,char** argv) {
 	glutInit(&argc,argv);
 	glutInitDisplayMode(GLUT_RGBA|GLUT_DEPTH|GLUT_DOUBLE);
 	glutInitWindowSize(1000,800);
 	glutInitWindowPosition(0,0);
-	glutCreateWindow("My_carr");
+	glutCreateWindow("Traffic Light Simulation");
 	
 	//glutFullScreen();
 	glutDisplayFunc(main_display);
