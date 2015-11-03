@@ -1,30 +1,35 @@
 // traffic.cpp : Defines the entry point for the console application.
 //
-#include "stdafx.h"
-#include<GL/glut.h>
-#include<stdio.h>
-#include<string.h>
+// #include "stdafx.h"
+#include "GL/freeglut.h"
+#include "GL/gl.h"
+// #include<GL/glut.h>
+// #include <stdio.h>
+#include <string>
+#include <iostream>
+
 #define ESCAPE 27
+
+using namespace std;
+
 int view=0;
 
-void text(int x,int y,char *string,int font)
-{
+void text(int x, int y, string s, int font) {
 	int i=0;
 	glColor3f(0.0,0.5,0.8);
 	glRasterPos2f(x,y);
-	for(i=0;i<strlen(string);i++)
-	{
+	for(i=0;i<s.length();i++) {
 		if(font==1)
-			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,string[i]);
+			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,s[i]);
 		else if(font==2)
-			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,string[i]);
-		else if(font==3)
-		{
+			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,s[i]);
+		else if(font==3) {
 			glColor3f(1.0,0.0,0.0);
-			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,string[i]);
+			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,s[i]);
 		}
 	}
 }
+
 void First_win()
 {
 	glClearColor(1.0,1.0,0.6,1.0);
@@ -146,14 +151,14 @@ void keyboard(unsigned char key,int x,int y)
 				glClearColor(0,0,0,0);
 				traffic_start();
 				break;
-		default:printf("You pressed %c\n",key);
+		default:cout<<"You pressed: "<<key;
 		
 	}
 }
 void reshape(int w,int h)
 {
 	glViewport(0,0,w,h);
-	printf("Width=%d height=%d \n",w,h);
+	cout<<"Width="<<w<<" height= "<<h<<endl;
 
 }
 int main(int argc,char** argv)
