@@ -10,6 +10,9 @@
 
 #define ESCAPE 27
 
+#define drawOneLine(x1,y1,x2,y2)  glBegin(GL_LINES);  \
+   glVertex2f ((x1),(y1)); glVertex2f ((x2),(y2)); glEnd();
+
 using namespace std;
 
 int view=0;
@@ -52,10 +55,11 @@ void init() {
 }
 
 void traffic_light() {
-	glTranslatef(-190,20,0);
-	glColor3f(0.0,0.0,0.0);
 	//traffic signal controller
 	glPushMatrix();
+	glTranslatef(-190,20,0);
+	glColor3f(0.0,0.0,0.0);
+	
 	glBegin(GL_POLYGON);
 	// glColor3f(0.7,0.3,0.0);
 		glVertex2d(600,350);  //1
@@ -66,6 +70,7 @@ void traffic_light() {
 	glPopMatrix();
 
 	glPushMatrix();
+	glTranslatef(-190,20,0);
 	glBegin(GL_POLYGON);
 	// glColor3f(0.6,0.2,0.0);
 		glVertex2d(630,370);  //4
@@ -77,6 +82,7 @@ void traffic_light() {
 
 	// Left Red Light
 	glPushMatrix();
+	glTranslatef(-190,20,0);
 	glBegin(GL_POLYGON);
 	// glColor3f(0.7,0.3,0.0);
 		glVertex2d(600,450);  //6
@@ -88,6 +94,7 @@ void traffic_light() {
 
 	//Right Red Light
 	glPushMatrix();
+	glTranslatef(-190,20,0);
 	glBegin(GL_POLYGON);
 	// glColor3f(0.7,0.3,0.0);
 		glVertex2d(700,450);  //11
@@ -99,6 +106,7 @@ void traffic_light() {
 
 	//Connecting Rod
 	glPushMatrix();
+	glTranslatef(-190,20,0);
 	glBegin(GL_POLYGON);
 	// glColor3f(0.7,0.3,0.0);
 		glVertex2d(650,520);  //15
@@ -107,6 +115,108 @@ void traffic_light() {
 		glVertex2d(600,520);  //18		
 	glEnd();
 	glPopMatrix();
+
+	//Left Lights
+	//Red 1
+	glPushMatrix();
+	glTranslatef(385, 580, 0);
+	glColor3f(1.0, 0, 0);
+	glutSolidSphere(12, 80, 80);
+	glPopMatrix();
+
+	//Yellow 1
+	glPushMatrix();
+	glTranslatef(385, 540, 0);
+	glColor3f(1.0, 1.0, 0.0);
+	glutSolidSphere(12, 80, 80);
+	glPopMatrix();
+
+	//Green 1
+	glPushMatrix();
+	glTranslatef(385, 500, 0);
+	glColor3f(0.0, 1.0, 0.0);
+	glutSolidSphere(12, 80, 80);
+	glPopMatrix();
+
+	//Right Lights
+	//Red 2
+	glPushMatrix();
+	glTranslatef(485, 580, 0);
+	glColor3f(1.0, 0, 0);
+	glutSolidSphere(12, 80, 80);
+	glPopMatrix();
+
+	//Yellow 2
+	glPushMatrix();
+	glTranslatef(485, 540, 0);
+	glColor3f(1.0, 1.0, 0.0);
+	glutSolidSphere(12, 80, 80);
+	glPopMatrix();
+
+	//Green 2
+	glPushMatrix();
+	glTranslatef(485, 500, 0);
+	glColor3f(0.0, 0.3, 0.0);
+	glutSolidSphere(12, 80, 80);
+	glPopMatrix();
+}
+
+void white_strips() {
+	//Left
+	glPushMatrix();
+	glColor3f(1.0, 1.0, 1.0);
+	glEnable(GL_LINE_STIPPLE);
+	glLineWidth(12.0);
+	glLineStipple (4, 0x0FFF);
+    drawOneLine (0.0, 365.0, 250.0, 365.0);
+	glPopMatrix();
+
+	//Right
+	glPushMatrix();
+	glColor3f(1.0, 1.0, 1.0);
+	glEnable(GL_LINE_STIPPLE);
+	glLineWidth(12.0);
+	glLineStipple (4, 0x0FFF);
+    drawOneLine (620.0, 365.0, 1500.0, 365.0);
+	glPopMatrix();	
+}
+
+void zebra() {
+	//Left
+	glPushMatrix();
+	glColor3f(1.0, 1.0, 1.0);
+	glEnable(GL_LINE_STIPPLE);
+	glLineWidth(12.0);
+	glLineStipple (1, 0x00FF);
+	for(float i=360.0, j=280.0, c=0; c<10; i-=5, j-=5, c++) {
+		drawOneLine (i, 250.0, j, 500.0);	
+	}
+    glPopMatrix();
+
+	//Right
+	glPushMatrix();
+	glColor3f(1.0, 1.0, 1.0);
+	glEnable(GL_LINE_STIPPLE);
+	glLineWidth(12.0);
+	glLineStipple (1, 0x00FF);
+	// drawOneLine (660, 250.0, 550, 500.0);
+	for(float i=660.0, j=550.0, c=0; c<10; i-=5, j-=5, c++) {
+		drawOneLine (i, 250.0, j, 500.0);	
+	}
+	glPopMatrix();
+
+	//Top
+	glPushMatrix();
+	glColor3f(1.0, 1.0, 1.0);
+	glEnable(GL_LINE_STIPPLE);
+	glLineWidth(12.0);
+	glLineStipple (1, 0x00FF);
+	// drawOneLine (300, 505.0, 500, 505.0);
+	for(float i=550.0, j=550.0, c=0; c<10; i-=5, j-=5, c++) {
+		drawOneLine (300, i, 500, j);	
+	}
+	glPopMatrix();
+
 }
 
 void road_strips() {
@@ -144,6 +254,8 @@ void road_strips() {
 	glPopMatrix();
 
 	//Dotted strips
+	white_strips();
+	zebra();
 	traffic_light();
 }
 
