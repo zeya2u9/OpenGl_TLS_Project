@@ -43,12 +43,70 @@ void First_win() {
 }
 
 void init() {
-	glClearColor(0,0,0,0);
+	glClearColor(0, 0, 0, 0);
 	glPointSize(5.0);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glOrtho(0.0,1000,0.0,800,50.0,-50.0);
 	glutPostRedisplay();
+}
+
+void traffic_light() {
+	glTranslatef(-190,20,0);
+	glColor3f(0.0,0.0,0.0);
+	//traffic signal controller
+	glPushMatrix();
+	glBegin(GL_POLYGON);
+	// glColor3f(0.7,0.3,0.0);
+		glVertex2d(600,350);  //1
+		glVertex2d(650,350);  //2
+		glVertex2d(650,370);  //3
+		glVertex2d(600,370);  //12
+	glEnd();
+	glPopMatrix();
+
+	glPushMatrix();
+	glBegin(GL_POLYGON);
+	// glColor3f(0.6,0.2,0.0);
+		glVertex2d(630,370);  //4
+		glVertex2d(630,520);  //5
+		glVertex2d(620,520);  //10
+		glVertex2d(620,370);  //11
+	glEnd();
+	glPopMatrix();
+
+	// Left Red Light
+	glPushMatrix();
+	glBegin(GL_POLYGON);
+	// glColor3f(0.7,0.3,0.0);
+		glVertex2d(600,450);  //6
+		glVertex2d(600,600);  //7
+		glVertex2d(550,600);  //8
+		glVertex2d(550,450);  //9		
+	glEnd();
+	glPopMatrix();
+
+	//Right Red Light
+	glPushMatrix();
+	glBegin(GL_POLYGON);
+	// glColor3f(0.7,0.3,0.0);
+		glVertex2d(700,450);  //11
+		glVertex2d(700,600);  //12
+		glVertex2d(650,600);  //13
+		glVertex2d(650,450);  //14		
+	glEnd();
+	glPopMatrix();
+
+	//Connecting Rod
+	glPushMatrix();
+	glBegin(GL_POLYGON);
+	// glColor3f(0.7,0.3,0.0);
+		glVertex2d(650,520);  //15
+		glVertex2d(650,540);  //16
+		glVertex2d(600,540);  //17
+		glVertex2d(600,520);  //18		
+	glEnd();
+	glPopMatrix();
 }
 
 void road_strips() {
@@ -86,39 +144,7 @@ void road_strips() {
 	glPopMatrix();
 
 	//Dotted strips
-
-
-	//traffic signal controller
-	glPushMatrix();
-	glBegin(GL_POLYGON);
-	glColor3f(0.7,0.3,0.0);
-		glVertex2d(600,350);  //1
-		glVertex2d(650,350);  //2
-		glVertex2d(650,370);  //3..
-		glVertex2d(600,370);//12
-	glEnd();
-	glPopMatrix();
-
-	glPushMatrix();
-	glBegin(GL_POLYGON);
-	glColor3f(0.6,0.2,0.0);
-		glVertex2d(630,370);  //4
-		glVertex2d(630,500);  //5
-		glVertex2d(620,500);//10
-		glVertex2d(620,370);//11
-	glEnd();
-	glPopMatrix();
-
-	glPushMatrix();
-	glBegin(GL_POLYGON);
-	glColor3f(0.7,0.3,0.0);
-		glVertex2d(640,500);  //6
-		glVertex2d(640,700);  //7
-		glVertex2d(610,700);  //8
-		glVertex2d(610,500); //9		
-	glEnd();
-	glPopMatrix();
-
+	traffic_light();
 }
 
 void main_display() {
@@ -145,12 +171,15 @@ void keyboard(unsigned char key, int x, int y) {
 	
 	switch(key) {
 		case ESCAPE:exit(1);
-		case ' ':view=1;
-				glClearColor(0,0,0,0);
-				traffic_start();
-				break;
-		default:cout<<"You pressed: "<<key;
 		
+		case ' ':
+			view=1;
+			glClearColor(1.0, 1.0, 1.0, 0);
+			traffic_start();
+			break;
+		
+		default:
+			cout<<"You pressed: "<<key;
 	}
 }
 
