@@ -10,14 +10,24 @@
 
 #define ESCAPE 27
 
+#define HIGH 1
+#define LOW 0.2
+
+#define RED 0
+#define YELLOW 1
+#define GREEN 2
+
 #define drawOneLine(x1,y1,x2,y2)  glBegin(GL_LINES);  \
    glVertex2f ((x1),(y1)); glVertex2f ((x2),(y2)); glEnd();
 
 using namespace std;
 
-GLint crx = -300, blx = -300;
+GLint crx = -500, blx = -300;
 
 int view=0;
+
+bool rl1[] = {false, false, true};
+bool rl2[] = {false, false, true};
 
 void text(int x, int y, string s, int font) {
 	int i=0;
@@ -58,15 +68,18 @@ void init() {
 }
 
 void car_chalao() {
-	crx += 3;
-	if(crx > 1500) {
+	if(rl1[GREEN] || crx > 300 || rl1[YELLOW])
+		crx += 3;
+	if(rl1[RED] && crx < -100)
+		crx += 3;
+	if(crx > 1200) {
 		crx = -300;
 	}
 }
 
 void bus_chalao() {
-	blx -= 3;
-	if(blx < -1600) {
+	blx -= 2;
+	if(blx < -1650) {
 		blx = -300;
 	}	
 }
@@ -470,21 +483,30 @@ void traffic_light() {
 	//Red 1
 	glPushMatrix();
 	glTranslatef(385, 580, 0);
-	glColor3f(1.0, 0, 0);
+	if(rl1[RED])
+		glColor3f(1.0, 0.0, 0.0);
+	else
+		glColor3f(0.2, 0.0, 0.0);
 	glutSolidSphere(12, 80, 80);
 	glPopMatrix();
 
 	//Yellow 1
 	glPushMatrix();
 	glTranslatef(385, 540, 0);
-	glColor3f(1.0, 1.0, 0.0);
+	if(rl1[YELLOW])
+		glColor3f(1.0, 1.0, 0.0);
+	else
+		glColor3f(0.2, 0.2, 0.0);
 	glutSolidSphere(12, 80, 80);
 	glPopMatrix();
 
 	//Green 1
 	glPushMatrix();
 	glTranslatef(385, 500, 0);
-	glColor3f(0.0, 1.0, 0.0);
+	if(rl1[GREEN])
+		glColor3f(0.0, 1.0, 0.0);
+	else
+		glColor3f(0.0, 0.2, 0.0);
 	glutSolidSphere(12, 80, 80);
 	glPopMatrix();
 
@@ -492,21 +514,30 @@ void traffic_light() {
 	//Red 2
 	glPushMatrix();
 	glTranslatef(485, 580, 0);
-	glColor3f(1.0, 0, 0);
+	if(rl2[RED])
+		glColor3f(1.0, 0.0, 0.0);
+	else
+		glColor3f(0.2, 0.0, 0.0);
 	glutSolidSphere(12, 80, 80);
 	glPopMatrix();
 
 	//Yellow 2
 	glPushMatrix();
 	glTranslatef(485, 540, 0);
-	glColor3f(1.0, 1.0, 0.0);
+	if(rl2[YELLOW])
+		glColor3f(1.0, 1.0, 0.0);
+	else
+		glColor3f(0.2, 0.2, 0.0);
 	glutSolidSphere(12, 80, 80);
 	glPopMatrix();
 
 	//Green 2
 	glPushMatrix();
 	glTranslatef(485, 500, 0);
-	glColor3f(0.0, 0.3, 0.0);
+	if(rl2[GREEN])
+		glColor3f(0.0, 1.0, 0.0);
+	else
+		glColor3f(0.0, 0.2, 0.0);
 	glutSolidSphere(12, 80, 80);
 	glPopMatrix();
 }
@@ -645,7 +676,28 @@ void keyboard(unsigned char key, int x, int y) {
 			glClearColor(1.0, 1.0, 1.0, 0);
 			traffic_start();
 			break;
+
+		case 'q':
+			cout<<"Red light 1 to RED"<<endl;
+			rl1[RED] = true;
+			rl1[YELLOW] = false;
+			rl1[GREEN] = false;
+			break;
 		
+		case 'w':
+			cout<<"Red light 1 to YELLOW"<<endl;
+			rl1[RED] = false;
+			rl1[YELLOW] = true;
+			rl1[GREEN] = false;
+			break;	
+
+		case 'e':
+			cout<<"Red light 1 to GREEN"<<endl;
+			rl1[RED] = false;
+			rl1[YELLOW] = false;
+			rl1[GREEN] = true;
+			break;
+
 		default:
 			cout<<"You pressed: "<<key;
 	}
