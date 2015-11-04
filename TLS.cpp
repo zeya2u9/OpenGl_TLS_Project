@@ -598,7 +598,7 @@ void grass()
 	}
 	for(int k=0;k<500;k+=50)   //right grass
 	{
-		if(r>0)
+		/*if(r>0)
 			r-=.2;
 		else
 			r=1.0;
@@ -609,7 +609,7 @@ void grass()
 		if(b>0)
 			b-=.2;
 		else
-			b=1.0;
+			b=1.0;*/
 		for(int i=500,c=0;c<5;i+=15,c++)
 			gra(i+k,525,530+k,500,r,g,b);
 	}	
