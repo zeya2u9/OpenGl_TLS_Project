@@ -618,7 +618,7 @@ void road_strips() {
 	//first bottom green strip
 	glPushMatrix();
 	glBegin(GL_POLYGON);
-	glColor3f(0.0,0.8,0.0);
+	glColor3f(0.85,0.64,0.12);
 		glVertex2d(0,200);
 		glVertex2d(0,250);
 		glVertex2d(1000,250);
@@ -687,7 +687,8 @@ void keyboard(unsigned char key, int x, int y) {
 		
 		case ' ':
 			view=1;
-			glClearColor(1.0, 1.0, 1.0, 0);
+			glClearColor(0.6, 0.8, 0.2, 0);
+			//glColor3f(0.85,0.64,0.12);
 			traffic_start();
 			break;
 
