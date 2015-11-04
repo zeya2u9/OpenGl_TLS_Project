@@ -1,5 +1,4 @@
 // traffic.cpp : Defines the entry point for the console application.
-//
 // #include "stdafx.h"
 #include "GL/freeglut.h"
 #include "GL/gl.h"
