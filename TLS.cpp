@@ -83,7 +83,16 @@ void car_chalao() {
 }
 
 void bus_chalao() {
-	blx -= 2;
+	// blx -= 2;
+	if(rl2[GREEN] || blx > 700) {
+		blx -=2;
+	}
+	if(!rl2[GREEN] && (blx < -650 && blx > -720)) {
+		blx += 2;
+	}
+	if((rl2[RED] || rl2[YELLOW]) && (blx > -650 || blx < -720)) {
+		blx -= 2;
+	}
 	if(blx < -1650) {
 		blx = -300;
 	}	
@@ -702,6 +711,28 @@ void keyboard(unsigned char key, int x, int y) {
 			rl1[YELLOW] = false;
 			rl1[GREEN] = true;
 			break;
+
+		case 'a':
+			cout<<"Red light 2 to RED"<<endl;
+			rl2[RED] = true;
+			rl2[YELLOW] = false;
+			rl2[GREEN] = false;
+			break;
+		
+		case 's':
+			cout<<"Red light 2 to YELLOW"<<endl;
+			rl2[RED] = false;
+			rl2[YELLOW] = true;
+			rl2[GREEN] = false;
+			break;	
+
+		case 'd':
+			cout<<"Red light 2 to GREEN"<<endl;
+			rl2[RED] = false;
+			rl2[YELLOW] = false;
+			rl2[GREEN] = true;
+			break;
+
 
 		default:
 			cout<<"You pressed: "<<key;
