@@ -31,7 +31,7 @@ bool rl2[] = {false, false, true};
 
 void text(int x, int y, string s, int font) {
 	int i=0;
-	glColor3f(0.0,0.5,0.8);
+	glColor3f(0.0,0.0,0.8);
 	glRasterPos2f(x,y);
 	for(i=0;i<s.length();i++) {
 		if(font==1)
@@ -49,11 +49,19 @@ void text(int x, int y, string s, int font) {
 void First_win() {
 	glClearColor(1.0,1.0,0.6,1.0);
 	text(290,700,"TRAFFIC LIGHT SIMULATOR",1);
-	text(350,660,"Using OpenGL",1);
-	text(400,620,"Made By:",2);
+	text(390,660,"Using OpenGL",1);
+	text(430,620,"Made By:",2);
 	text(300,580,"Zeya Umayya & Zishan Ahmad",1);
-	text(100,540,"INSTRUCTIONS::",2);
-	text(300,100,"!!!!PRESS SPACEBAR TO ENTER INTO THE ARENA!!!!",3);
+	text(400,540,"INSTRUCTIONS::",2);
+	text(100,500,"For Left Traffic Light",2);
+	text(100,460,"Q -- Red Light",2);
+	text(100,420,"W -- Yellow Light",2);
+	text(100,380,"R -- Green Light",2);
+	text(560,500,"For Right Traffic Light",2);
+	text(600,460,"A -- Red Light",2);
+	text(600,420,"S -- Yellow Light",2);
+	text(600,380,"D -- Green Light",2);
+	text(200,100,"!!!!PRESS SPACEBAR TO ENTER INTO THE ARENA!!!!",3);
 	glutPostRedisplay();
 	//glutSwapBuffers();
 }
@@ -556,6 +564,58 @@ void traffic_light() {
 	glPopMatrix();
 }
 
+void gra(int x,int y,int p,int q,float r,float g,float b)
+{
+	glPushMatrix();
+	glColor3f(r,g,b);
+	glLineWidth(2.0);
+	glBegin(GL_LINES);
+		glVertex2d(x,y);
+		glVertex2d(p,q);
+	glEnd();
+	glPopMatrix();
+}
+void grass()
+{
+	float r=1.0,g=0.0,b=0.8;
+	for(int k=0;k<300;k+=50)   ////left grass
+	{
+		if(r>0)
+			r-=.2;
+		else
+			r=1.0;
+		if(g<1)
+			g+=.2;
+		else
+			g=0.0;
+		if(b>0)
+			b-=.2;
+		else
+			b=1.0;
+
+		for(int i=0, j=525,c=0;c<5;i+=15,j-=5,c++)
+			gra(i+k,525,30+k,500,r,g,b);
+	}
+	for(int k=0;k<500;k+=50)   //right grass
+	{
+		if(r>0)
+			r-=.2;
+		else
+			r=1.0;
+		if(g<1)
+			g+=.2;
+		else
+			g=0.0;
+		if(b>0)
+			b-=.2;
+		else
+			b=1.0;
+		for(int i=500,c=0;c<5;i+=15,c++)
+			gra(i+k,525,530+k,500,r,g,b);
+	}	
+		
+}
+
 void white_strips() {
 	//Left
 	glPushMatrix();
@@ -564,6 +624,7 @@ void white_strips() {
 	glLineWidth(12.0);
 	glLineStipple (4, 0x0FFF);
     drawOneLine (0.0, 365.0, 250.0, 365.0);
+	glDisable(GL_LINE_STIPPLE);
 	glPopMatrix();
 
 	//Right
@@ -573,6 +634,7 @@ void white_strips() {
 	glLineWidth(12.0);
 	glLineStipple (4, 0x0FFF);
     drawOneLine (620.0, 365.0, 1500.0, 365.0);
+	glDisable(GL_LINE_STIPPLE);
 	glPopMatrix();	
 }
 
@@ -586,6 +648,7 @@ void zebra() {
 	for(float i=360.0, j=280.0, c=0; c<10; i-=5, j-=5, c++) {
 		drawOneLine (i, 250.0, j, 500.0);	
 	}
+	glDisable(GL_LINE_STIPPLE);
     glPopMatrix();
 
 	//Right
@@ -598,6 +661,7 @@ void zebra() {
 	for(float i=660.0, j=550.0, c=0; c<10; i-=5, j-=5, c++) {
 		drawOneLine (i, 250.0, j, 500.0);	
 	}
+	glDisable(GL_LINE_STIPPLE);
 	glPopMatrix();
 
 	//Top
@@ -610,6 +674,7 @@ void zebra() {
 	for(float i=550.0, j=550.0, c=0; c<10; i-=5, j-=5, c++) {
 		drawOneLine (300, i, 500, j);	
 	}
+	glDisable(GL_LINE_STIPPLE);
 	glPopMatrix();
 
 }
@@ -647,10 +712,13 @@ void road_strips() {
 		glVertex2d(500,500);
 	glEnd();
 	glPopMatrix();
+	
+	zebra();
+	//Grass
+	grass();
 
 	//Dotted strips
 	white_strips();
-	zebra();
 	car();
 	traffic_light();
 	bus();
